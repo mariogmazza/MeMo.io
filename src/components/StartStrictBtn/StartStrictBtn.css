@@ -1,0 +1,31 @@
+.bFOR{
+    position:relative;
+    /* top:25px; */
+  }
+  
+  .btn.bFOR{
+    border:5px solid black;
+    border-radius:100%;
+    height:40px;
+    width:40px;
+    /* background-color:black; */
+    margin:5px;
+    padding-top:10px;
+    padding-right:4px;
+    
+  }
+  .start{
+    background-color:green;
+  }
+
+  .strict{
+    background-color:yellow;
+  }
+
+  .strictON {
+    background-color: red;
+  }
+  
+  .startON{
+    background-color: rgb(58, 58, 189)
+  }

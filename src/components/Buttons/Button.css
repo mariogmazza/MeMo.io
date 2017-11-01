@@ -1,0 +1,64 @@
+
+  .b1 {
+    left: 0;
+    top: 0;
+    background-color: rgb(6, 100, 6);
+    border-radius: 100% 0% 0% 0%;
+    border-color: grey;
+    outline: none;
+  }
+   
+  .b2 {
+    top: 0;
+    right: 0;
+    background-color: rgb(148, 11, 11);
+    border-radius: 0% 100% 0% 0%;
+    border-color: grey;
+    outline: none;
+  }
+   
+  .b3 {
+    bottom: 0;
+    left: 0;
+    background-color: rgb(158, 158, 4);
+    border-radius: 0% 0% 0% 100%;
+    border-color: grey;
+    outline: none;
+  }
+   
+  .b4 {
+    bottom: 0;
+    right: 0;
+    border-radius: 0% 0% 100% 0%;
+    background-color: #0066ff;
+    border-color: grey;
+    outline: none;
+  }
+ 
+  .colorButton {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    margin: 20px;
+    padding: 0px;
+  }
+
+  .button1 {
+    /* opacity: .6; */
+    background-color: rgb(0, 255, 42)
+  }
+
+  .button2 {
+    /* opacity: .6; */
+    background-color: rgb(250, 0, 0)
+  }
+
+  .button3 {
+    /* opacity: .6; */
+    background-color: rgb(224, 247, 25)
+  }
+
+  .button4 {
+    /* opacity: .6; */
+    background-color: #4d94ff
+  }

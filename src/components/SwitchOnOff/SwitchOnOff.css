@@ -1,0 +1,34 @@
+.sw{
+  position:relative;
+  top:18px;
+  margin:auto;
+}
+.btn.sw{
+  border:2px solid black;
+  background-color:black;
+  padding:0px;
+  width:80px;
+  height:30px;
+}
+.toggleSW-left{
+  position:relative;
+  padding:8px;
+  width:30px;
+  border:4px solid black;
+  border-radius:10px;
+  background-color:#0d1fbf;
+  right:18px;
+  color:white;
+}
+ 
+.toggleSW-right{
+  position:relative;
+  padding:8px;
+  width:30px;
+  border:4px solid black;
+  border-radius:10px;
+  background-color:#bf0d1f;
+  left:18px;
+  color:white;
+}
+ 
