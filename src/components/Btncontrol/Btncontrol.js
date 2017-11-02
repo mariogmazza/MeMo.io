@@ -5,42 +5,38 @@ import BoxOut from "../BoxOut/BoxOut"
 import StartStrictBtn from "../StartStrictBtn/StartStrictBtn"
 import SwitchOnOff from "../SwitchOnOff/SwitchOnOff"
 
-
+                      
 class BtnControl extends React.Component {
   constructor(props){
   super(props)
 
-  this.state = {
-    userArr:[],
-    gameArr:[],
+    this.gameArr=[]
+    this.userArr=[]
+    this.gameOn=false
+    this.equalArr=true
+    this.gameArrCounter=0
+    this.userArrCounter=0
+    this.speed=1000
+    this.tempColor=""
+    this.levelCount=1
+    this.bCheck=0
+    this.bStrict=0
+    this.gameCall=false
 
+  this.state = {
     button1:false,
     button2:false,
     button3:false,
     button4:false,
-
-    gameOn:false,
-    equalArr:true,
-
-    gameArrCounter:0,
-    userArrCounter:0,
-
-    speed:1000,
-    tempColor:"",
-    levelCount:1,
     gameRunning:false,
-    bCheck:0,
-    bStrict:0,
     strictMode:false,
     boxOut:"",
-
     buttonStyle:{},
-    startStyle:{},
-    strictStyle:{},
-
     switchText:"ON",
     switchClass:"toggleSW-left"
   }
+
+  
 }//end of constructor
 
   componentDidMount(){
@@ -52,8 +48,8 @@ class BtnControl extends React.Component {
   }
 
   getRandom=()=> {
-    console.log("getRandom() was called");
-    this.state.gameArr.push("button" + this.getRandomIntInclusive(1, 4))
+    console.log("getRandom() was called it pushes a new button to gameArr");
+    this.gameArr.push(`button${this.getRandomIntInclusive(1, 4)}`)
   }
 
   getRandomIntInclusive(min, max){
@@ -63,207 +59,187 @@ class BtnControl extends React.Component {
   }
  
 
-//################################################
 toggleSwitch=()=>{
 
   console.log("toggleSwitch() was call => sets the game");
 
-  if (this.state.bCheck === 0) {
-
+  if (this.bCheck === 0) {
     console.log("bCheck is = 0");
 
+    this.gameOn=true
+    this.bCheck=1
+
     this.setState({
-      gameOn:true,
-      bCheck:1,
       switchText:"OFF",
       switchClass:"toggleSW-right",
       boxOut:"READY!!!"
     })
-  }else if(this.state.bCheck===1){
+  }else if(this.bCheck===1){
 
     console.log("bCheck is = 1");
+    this.gameOn=false
+    this.bCheck =0
+    this.gameArr=[]
+    this.userArr =[]
+    this.levelCount=1
+    this.gameArrCounter=0
+    this.userArrCounter=0
+    this.bStrict=0
+    this.equalArr=true
 
     this.setState({
-      gameOn:false,
       gameRunning:false,
       switchText:"ON",
       switchClass:"toggleSW-left",
-      bCheck : 0,
-      gameArr : [],
-      userArr :[],
-      levelCount:1,
       boxOut:"-----",
-      // strictStyle:{backgroundColor: "yellow"},
-      // startStyle:{backgroundColor:"green"},
-      gameArrCounter:0,
-      userArrCounter:0,
       strictMode:false,
-      bStrict: 0,
-      equalArr:true,
       buttonStyle:{pointerEvents:"none"}
     })
-    this.clearInterval();
+      console.log("clearInterval called in bCheck=1");
+      clearInterval(this.gameCall);
   }
   
 }
 
 startClk=()=>{
-  if(this.state.gameOn===true){
+  if(this.gameOn===true){
     console.log("startClk was called starts the game");
     
+    this.userArr= []
+    this.gameArr= []
+    this.gameArrCounter=0
+    this.userArrCounter=0
+    this.levelCount=1
+    this.equalArr=true
+
     this.setState({
     gameRunning:true,
-    userArr: [],
-    gameArr: [],
-    gameArrCounter :0,
-    userArrCounter :0,
-    levelCount : 1,
-    equalArr :true,
     buttonStyle:{pointerEvents:"none"},
     })
+      console.log("calling: getRandom(), clearInterval()");
     this.getRandom()
-    this.clearInterval()
-    this.startGame()
+    clearInterval(this.gameCall)
+    // this.startGame()
+    setTimeout(()=> { //maybe remove windows. if err
+      this.gameCall=setInterval(this.playGame(),this.speed)
+      console.log("first settimeout calle, playGame");
+    },1000)
   }
 }
 
-clearInterval=()=>{
-    this.clear=window.clearInterval(this.gameCall);
-}
-
-startGame=()=>{
-  setTimeout(()=> {
-    this.gameCall=window.setInterval(this.playGame(),this.state.speed)
-  },1000)
-}
-
-userChoice(number){
-  let Arr = this.state.userArr
-    Arr.push("button" + number)
- this.setState({ userArr: Arr })
-}
-
-
 buttonClick= (number) =>{
-  if (this.state.gameOn === true && this.state.gameRunning === true) {  
-    // if (event.which == 1) {
-      
-//buttons visual effects
+  if (this.gameOn === true && this.state.gameRunning === true) {  
    this.buttonFx("button"+number);
-
-//**********************************************
   // $("#sound" + tempID).get(0).cloneNode().play(); // sound to the button
-    this.userChoice(number)// pushes current button when clicked
-    this.setState({userArrCounter:this.state.userArrCounter+1})
+    this.userArr.push("button"+number)// pushes current button when clicked
+    console.log("userArrCounter before increment "+this.userArrCounter);
+    this.userArrCounter=this.userArrCounter+1
 
-    console.log("userArrCounter "+this.state.userArrCounter)
+    console.log("userArrCounter after incremented "+this.userArrCounter)
+    console.log("userArr length "+this.userArr.length);
 
-     for (let i = 0; i < this.state.userArr.length; i++) {
+     for (let i = 0; i < this.userArr.length; i++) {
    // checks if game Array and user Array are the same
-   console.log("gameArr "+this.state.gameArr[i]+" userArr "+this.state.userArr[i]);
-   
-      if (this.state.gameArr[i] !== this.state.userArr[i]) {
-       this.setState({equalArr :false})
+      if (this.gameArr[i] !== this.userArr[i]) {
+        console.log(this.gameArr[i]+);
+        this.equalArr=false
      }
    }
-   if(this.state.equalArr===false){
+
+   if(this.equalArr===false){
     // $("#Wrong").get(0).cloneNode().play();
+    this.userArr = []
+    this.gameArrCounter = 0
+    this.userArrCounter = 0
+    this.equalArr = true
     this.setState({
     boxOut:"NOPE!",
-    userArr :[],
-    gameArrCounter : 0,
-    userArrCounter : 0,
-    equalArr :true,
-    // buttonStyle: {pointerEvents: "none"}
+    buttonStyle: {pointerEvents: "none"}
     })
-  //  }
+  
    if (this.state.strictMode === true) {
-     this.setState({
-       gameArr:[],
-       levelCount:1,
-    })
-    this.getRandom()
-    this.startGame()
-   }else{
-     this.startGame()
-   }
- }else{
+       this.gameArr=[]
+       this.levelCount=1
+       this.getRandom()
+       setTimeout(()=> { //maybe remove windows. if err
+        this.gameCall=setInterval(this.playGame(),this.speed)
+        console.log("second settimeout called, playGame");
+      },1000)
 
-  if (this.state.userArrCounter === this.state.gameArrCounter) {
-      if(this.state.levelCount===20){
-        this.clearInterval()
+   }
+   
+   else{
+    setTimeout(()=> { //maybe remove windows. if err
+      this.gameCall=setInterval(this.playGame(),this.speed)
+      console.log("third settimeout called, playGame");
+    },1000)
+   }
+
+ }
+
+ else{
+  if (this.userArrCounter === this.gameArrCounter) {
+      if(this.levelCount===20){
+        clearInterval(this.gameCall)
         this.setState({boxOut:"YOU WON!!"})
         this.winMode()
       }
-      if(this.state.equalArr===true){
-        this.setState({
-          levelCount:this.state.levelCount+1,
-          userArr:[],
-          gameArrCounter:0,
-          userArrCounter:0,
-          // buttonStyle: {pointerEvents: "none"}          
-        })
-        this.getRandom()
+      if(this.equalArr===true){
+          this.levelCount=this.levelCount+1
+          this.userArr=[]
+          this.gameArrCounter=0
+          this.userArrCounter=0
+          this.getRandom()
 
-        if (this.state.levelCount < 4) {
-          this.setState({speed :1000})
-        } else if (this.state.levelCount === 5) {
-          this.setState({speed :800})
-        } else if (this.state.levelCount === 10) {
-          this.setState({speed :600})
-        } else if (this.state.levelCount === 15) {
-          this.setState({speed :400})
+        if (this.levelCount < 4) {
+          this.speed =1000
+        } else if (this.levelCount === 5) {
+          this.speed =800
+        } else if (this.levelCount === 10) {
+          this.speed =600
+        } else if (this.levelCount === 15) {
+          this.speed =400
         }
-        this.startGame()
-      } //end of equalArr
+        setTimeout(()=> { //maybe remove windows. if err
+          this.gameCall=setInterval(this.playGame(),this.speed)
+          console.log("fourth settimeout called, playGame");
+        },1000)
+        // this.setState({buttonStyle:{pointerEvents:"none"}})
+     } //end of equalArr
     }
+   }
   }
-//  }
-}
-}
+ }
 
 
 strictClk=()=>{
-  if (this.state.gameOn === true && this.state.gameRunning === false) {
+  if (this.gameOn === true && this.state.gameRunning === false) {
     this.setState({strictMode:true})
-    if(this.state.bStrict===0){
-      this.setState({
-        strictStyle:{backgroundColor: "red"},
-        bStrict:1
-    })
-      // this.setState({strictMode:true})
-
-    }else if(this.state.bStrict===1){
-      this.setState({
-        strictStyle:{backgroundColor: "yellow"},
-        bStrict:0
-      })
+    if(this.bStrict===0){
+        this.bStrict=1
+    }else if(this.bStrict===1){
+        this.bStrict=0
     }
   }
 }
 
-playGame=()=>{
-this.setState({boxOut:this.state.levelCount})
-console.log(this.state.gameArr);
-this.tempB=this.state.gameArr[this.state.gameArrCounter]
-
-// console.log("this is playgame=gameArr "+ this.state.gameArr)
-
-this.buttonFx(this.tempB)
-
-this.setState({gameArrCounter:this.state.gameArrCounter+1})
-
-console.log("this is gameArrCounter "+this.state.gameArrCounter);
-
-if(this.state.gameArrCounter===this.state.gameArr.length){
-  this.clearInterval()
+ playGame=()=>{
+this.setState({boxOut:this.levelCount.toString()})
+this.tempColor=this.gameArr[this.gameArrCounter]
+console.log("this is tempColor "+this.tempColor);
+this.buttonFx(this.tempColor)
+this.gameArrCounter=this.gameArrCounter+1
+console.log("this is gameArrCounter "+this.gameArrCounter);
+if(this.gameArrCounter===this.gameArr.length){
+  console.log("gameArrCounter and gameArr are the same");
+  clearInterval(this.gameCall)
   this.setState({buttonStyle:{pointerEvents: "auto"}})
  }
 }
 
+
  buttonFx=(buttonN)=>{
   const currB=buttonN;  
-  console.log(currB+" this is currB");
 
   this.effect=setTimeout(()=> {
     this.setState({[currB]:true})
@@ -273,22 +249,7 @@ if(this.state.gameArrCounter===this.state.gameArr.length){
     this.setState({[currB]:false})
   },350)
 }
-
-
-/*
-function playGame() {
-  $("#boxOut").html(levelCount);
-  tempColor = gameArr[gameArrCounter]; // grabs one of the IDs pushed by getRandom()
-  // console.log(tempColor);
-  $("#sound" + tempColor).get(0).cloneNode().play(); // plays buttons sound
-  buttonClick(tempColor);
-  gameArrCounter++;
-  if (gameArrCounter == gameArr.length) {
-    clearInterval(gameCall);
-    $(".colorButton").css("pointer-events", "auto");
-  }
-}
-*/
+                     
   render(){
   return(
   <div>
