@@ -62,3 +62,7 @@
     /* opacity: .6; */
     background-color: #4d94ff
   }
+
+.disableButtons{
+  pointer-events: none;
+}

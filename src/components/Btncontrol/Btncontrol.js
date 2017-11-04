@@ -31,7 +31,7 @@ class BtnControl extends React.Component {
     gameRunning:false,
     strictMode:false,
     boxOut:"",
-    buttonStyle:{},
+    disableButtons:false,
     switchText:"ON",
     switchClass:"toggleSW-left"
   }
@@ -40,7 +40,7 @@ class BtnControl extends React.Component {
 }//end of constructor
 
   componentDidMount(){
- 
+    
   }
 
   componentWillMount(){
@@ -48,7 +48,6 @@ class BtnControl extends React.Component {
   }
 
   getRandom=()=> {
-    console.log("getRandom() was called it pushes a new button to gameArr");
     this.gameArr.push(`button${this.getRandomIntInclusive(1, 4)}`)
   }
 
@@ -64,7 +63,6 @@ toggleSwitch=()=>{
   console.log("toggleSwitch() was call => sets the game");
 
   if (this.bCheck === 0) {
-    console.log("bCheck is = 0");
 
     this.gameOn=true
     this.bCheck=1
@@ -75,8 +73,6 @@ toggleSwitch=()=>{
       boxOut:"READY!!!"
     })
   }else if(this.bCheck===1){
-
-    console.log("bCheck is = 1");
     this.gameOn=false
     this.bCheck =0
     this.gameArr=[]
@@ -93,9 +89,8 @@ toggleSwitch=()=>{
       switchClass:"toggleSW-left",
       boxOut:"-----",
       strictMode:false,
-      buttonStyle:{pointerEvents:"none"}
+      disableButtons:true
     })
-      console.log("clearInterval called in bCheck=1");
       clearInterval(this.gameCall);
   }
   
@@ -114,15 +109,13 @@ startClk=()=>{
 
     this.setState({
     gameRunning:true,
-    buttonStyle:{pointerEvents:"none"},
+    disableButtons:true
     })
-      console.log("calling: getRandom(), clearInterval()");
     this.getRandom()
     clearInterval(this.gameCall)
-    // this.startGame()
-    setTimeout(()=> { //maybe remove windows. if err
+
+    setTimeout(()=> { 
       this.gameCall=setInterval(this.playGame(),this.speed)
-      console.log("first settimeout calle, playGame");
     },1000)
   }
 }
@@ -130,18 +123,13 @@ startClk=()=>{
 buttonClick= (number) =>{
   if (this.gameOn === true && this.state.gameRunning === true) {  
    this.buttonFx("button"+number);
-  // $("#sound" + tempID).get(0).cloneNode().play(); // sound to the button
-    this.userArr.push("button"+number)// pushes current button when clicked
-    console.log("userArrCounter before increment "+this.userArrCounter);
+    this.userArr.push("button"+number)
     this.userArrCounter=this.userArrCounter+1
-
-    console.log("userArrCounter after incremented "+this.userArrCounter)
-    console.log("userArr length "+this.userArr.length);
 
      for (let i = 0; i < this.userArr.length; i++) {
    // checks if game Array and user Array are the same
       if (this.gameArr[i] !== this.userArr[i]) {
-        console.log(this.gameArr[i]+);
+        console.log(this.gameArr[i]);
         this.equalArr=false
      }
    }
@@ -154,7 +142,7 @@ buttonClick= (number) =>{
     this.equalArr = true
     this.setState({
     boxOut:"NOPE!",
-    buttonStyle: {pointerEvents: "none"}
+    disableButtons: true
     })
   
    if (this.state.strictMode === true) {
@@ -163,7 +151,6 @@ buttonClick= (number) =>{
        this.getRandom()
        setTimeout(()=> { //maybe remove windows. if err
         this.gameCall=setInterval(this.playGame(),this.speed)
-        console.log("second settimeout called, playGame");
       },1000)
 
    }
@@ -171,7 +158,6 @@ buttonClick= (number) =>{
    else{
     setTimeout(()=> { //maybe remove windows. if err
       this.gameCall=setInterval(this.playGame(),this.speed)
-      console.log("third settimeout called, playGame");
     },1000)
    }
 
@@ -202,9 +188,8 @@ buttonClick= (number) =>{
         }
         setTimeout(()=> { //maybe remove windows. if err
           this.gameCall=setInterval(this.playGame(),this.speed)
-          console.log("fourth settimeout called, playGame");
         },1000)
-        // this.setState({buttonStyle:{pointerEvents:"none"}})
+        this.setState({disableButtons:true})
      } //end of equalArr
     }
    }
@@ -226,14 +211,11 @@ strictClk=()=>{
  playGame=()=>{
 this.setState({boxOut:this.levelCount.toString()})
 this.tempColor=this.gameArr[this.gameArrCounter]
-console.log("this is tempColor "+this.tempColor);
 this.buttonFx(this.tempColor)
 this.gameArrCounter=this.gameArrCounter+1
-console.log("this is gameArrCounter "+this.gameArrCounter);
 if(this.gameArrCounter===this.gameArr.length){
-  console.log("gameArrCounter and gameArr are the same");
   clearInterval(this.gameCall)
-  this.setState({buttonStyle:{pointerEvents: "auto"}})
+  this.setState({disableButtons:false})
  }
 }
 
@@ -254,10 +236,10 @@ if(this.gameArrCounter===this.gameArr.length){
   return(
   <div>
    
-    <Button style={this.state.buttonStyle} onClick={this.buttonClick} number={1} ifclicked={this.state.button1}/>
-    <Button style={this.state.buttonStyle} onClick={this.buttonClick} number={2} ifclicked={this.state.button2}/>
-    <Button style={this.state.buttonStyle} onClick={this.buttonClick} number={3} ifclicked={this.state.button3}/>
-    <Button style={this.state.buttonStyle} onClick={this.buttonClick} number={4} ifclicked={this.state.button4}/>
+    <Button disable={this.state.disableButtons} onClick={this.buttonClick} number={1} ifclicked={this.state.button1}/>
+    <Button disable={this.state.disableButtons} onClick={this.buttonClick} number={2} ifclicked={this.state.button2}/>
+    <Button disable={this.state.disableButtons} onClick={this.buttonClick} number={3} ifclicked={this.state.button3}/>
+    <Button disable={this.state.disableButtons} onClick={this.buttonClick} number={4} ifclicked={this.state.button4}/>
 
     <Switchcontainer>
 
