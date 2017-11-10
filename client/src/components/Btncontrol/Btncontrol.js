@@ -3,6 +3,7 @@ import StartStrictBtn from '../StartStrictBtn/StartStrictBtn'
 import Buttons from '../Buttons/Buttons'
 import BoxOut from '../BoxOut/BoxOut'
 import Switchcontainer from "../Switchcontainer/Switchcontainer"
+import API from "../utils/API"
 
 class Btncontrol extends Component {
   constructor(props){
@@ -44,6 +45,11 @@ class Btncontrol extends Component {
   }
 
   stop =()=> {
+    // import API here to save the value of the counter to DB
+    API.updateScore(this.state.counter)
+    .then(res=>{
+    })
+
     this.currentIndex = 0;
     this.soundArray = [];
     this.setState({

@@ -1,23 +1,25 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Navpills from "./components/Navpills";
-import LogIn from "./components/pages/LogIn";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import Login from "./components/pages/Login";
 import Home from "./components/pages/Home";
-//import Discover from "./components/pages/Discover";
-//import Search from "./components/pages/Search";
+import Signup from "./components/pages/Signup";
+import Userlog from "./components/pages/Userlog";
+import NoMatch from "./components/NoMatch";
 
 
 const App = () =>
   <div>
   <Router>
     <div>
-      <Navpills />
-     
+     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/LogIn" component={LogIn} />
-
-      
-    </div>
+      <Route exact path="/login" component={Login} /> 
+      <Route exact path="/register" component={Signup} />
+      <Route exact path="/logout" component={Login} />
+      <Route exact path="/user/:id" component={Userlog} />
+      <Route component={NoMatch} />
+    </Switch>
+   </div>
   </Router>
   
   </div>
