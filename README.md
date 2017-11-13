@@ -1,4 +1,5 @@
-# Create React Express App
+
+## React Express App Simon Game
 
 ## About This Boilerplate
 
@@ -34,9 +35,3 @@ After confirming that you have an up to date git repository and a Heroku app cre
 ```
 yarn build
 ```
-
-2. Add and commit all changes to git
-
-3. Push to Heroku
-
-If all previous steps were followed correctly, your application should be deployed to Heroku!
