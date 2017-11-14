@@ -19,7 +19,7 @@ performance. When a register user logs in more "memory" games will be available 
 ![non user](https://github.com/mariogmazza/SimonApp/blob/master/Simon_nonUser.gif)
 
 ### This gif  shows the view from a register user
-![register user]()
+![register user](https://github.com/mariogmazza/SimonApp/blob/master/Simon_user.gif)
 
 
 
