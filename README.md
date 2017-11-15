@@ -1,5 +1,5 @@
 
-## ReactJS Based Simon Game App
+## The Memory Game based on the classic Simon Game from the 80's
 
 ## About This Site 
 
