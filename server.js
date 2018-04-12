@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // Serve up static assets
 app.use(express.static("client/build"));
 
-app.use(require("express-session")({secret: 'youwillneverguessthesecret', resave: false, saveUninitialized: false}));
+app.use(require("express-session")({secret: 'youwillneverguessthesecretmaybe', resave: false, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
 
