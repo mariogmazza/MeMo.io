@@ -29,16 +29,16 @@ Start by installing front and backend dependencies. While in this directory, run
 ```
 git clone
 cd in
-yarn install
+npm install
 cd client
-yarn install
+npm install
 cd ..
 ``
 
 After both installations complete, run the following command in your terminal:
 
 ```
-yarn start
+npm start
 ```
 
 That's it, the app should be running on <http://localhost:3000>
