@@ -89,7 +89,6 @@ class Login extends Component {
                 })
                 .catch(err => console.log(err));
 
-                console.log("username: "+this.state.username+" "+"pass: "+this.state.password);
           }
 	}
 
